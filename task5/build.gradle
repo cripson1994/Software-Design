@@ -1,0 +1,16 @@
+group 'spbau.se2018'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.github.czyzby', name: 'noise4j', version: '0.1.0'
+
+}
