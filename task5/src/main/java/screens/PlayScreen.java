@@ -145,6 +145,7 @@ public class PlayScreen implements Screen {
 
         int offsetX = 0;
         int offsetY = 0;
+        PositionUpdater.updateAll(world, hero);
         switch (key.getExtendedKeyCode()) {
             case VK_UP:
                 offsetY = -1;
@@ -167,7 +168,7 @@ public class PlayScreen implements Screen {
         if (hero.updatePosition(world, offsetX, offsetY)) {
             window.scroll(offsetX, offsetY);
         }
-        PositionUpdater.updateAll(world, hero);
+//        PositionUpdater.updateAll(world, hero);
 
 
         if (hero.getHP() < 0) {

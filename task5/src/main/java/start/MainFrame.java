@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         super("roguelike");
+
         playMusic();
 
         setSize(980, 760);
