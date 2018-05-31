@@ -8,22 +8,19 @@ import spbau2018.se.world.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Logger;
 
-public class Hero implements spbau2018.se.characters.Character {
-    private int hp = 100;
-    private int attack = 40;
+public class Hero extends spbau2018.se.characters.Character {
     private int respiteBound = 5;
     private int respite = respiteBound;
-    private int x;
-    private int y;
-    private Drawer drawer;
-    private FieldOfView fieldOfView;
     private Inventory inventory = new Inventory();
 
-    private class HeroDrawer extends Drawer {
-        int offsetX;
-        int offsetY;
+    {
+        hp = 100;
+        attack = 40;
+    }
 
+    private class HeroDrawer extends Drawer {
         @Override
         public void draw(JFrame frame, int offsetX, int offsetY, FieldOfView view) {
             this.offsetX = offsetX;
@@ -71,43 +68,21 @@ public class Hero implements spbau2018.se.characters.Character {
 
 
     public Item putOnItem(Item item) {
-        return inventory.getAmunation().putOn(item);
+        log.info("put on " + item.type() + ": " + item.name());
+        return inventory.getAmmunation().putOn(item);
     }
 
 
     @Override
-    public void bump(spbau2018.se.characters.Character character) {
-        int dmg = character.getAttack() - inventory.getAmunation().getSumArmore() < 0 ?
-                0 : character.getAttack() - inventory.getAmunation().getSumArmore();
+    public void bump(Character character) {
+        int dmg = character.getAttack() - inventory.getAmmunation().getSumArmore() < 0 ?
+                0 : character.getAttack() - inventory.getAmmunation().getSumArmore();
         hp -= dmg;
     }
 
     @Override
     public int getAttack() {
-        return attack + inventory.getAmunation().getSumDamage();
+        return attack + inventory.getAmmunation().getSumDamage();
     }
 
-    @Override
-    public int getHP() {
-        return hp;
-    }
-
-    public FieldOfView getFieldOfView() {
-        return fieldOfView;
-    }
-
-    @Override
-    public Drawer drawerCast() {
-        return drawer;
-    }
-
-    @Override
-    public int x() {
-        return x;
-    }
-
-    @Override
-    public int y() {
-        return y;
-    }
 }

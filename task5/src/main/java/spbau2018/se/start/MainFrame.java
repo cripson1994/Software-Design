@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class MainFrame extends JFrame {
     private Screen screen;
@@ -17,7 +20,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("roguelike");
 
-        playMusic();
+//        playMusic();
 
         setSize(980, 760);
         setBackground(Color.BLACK);
@@ -45,6 +48,20 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        Logger log = Logger.getLogger("GameLog");
+        FileHandler fh;
+
+        try {
+            fh = new FileHandler("LogFile.log", true);
+            log.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            log.info("start program");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         MainFrame app = new MainFrame();
         app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         app.setVisible(true);

@@ -13,6 +13,7 @@ public class World {
     private final boolean knownTiles[][];
     private int width;
     private int height;
+    private Random random = new Random();
 
     World(Tile[][] tiles, int level) {
         this.tiles = tiles;
@@ -25,10 +26,9 @@ public class World {
 
     private void fillItems(int level) {
         int itemsCount = Item.values().length;
-        Random rand = new Random();
         for (int i = 0; i < 10; i++) {
             Pair<Integer, Integer> freeTail = getFreeTile();
-            Item item = Item.values()[rand.nextInt(itemsCount)];
+            Item item = Item.values()[random.nextInt(itemsCount)];
             tiles[freeTail.getKey()][freeTail.getValue()].setItem(item);
         }
     }
@@ -49,8 +49,8 @@ public class World {
         int x;
         int y;
         do {
-            x = (int) (Math.random() * width);
-            y = (int) (Math.random() * height);
+            x = (int) (random.nextDouble() * width);
+            y = (int) (random.nextDouble() * height);
         }
         while (!canMoveTo(x, y) && !hasItem(x, y));
         return new Pair<>(x, y);
@@ -64,7 +64,7 @@ public class World {
         int radius = hero.getFieldOfView().getViewRadius();
         for (int x = hero.x() - radius; x < hero.x() + radius; x++) {
             for (int y = hero.y() - radius; y < hero.y() + radius; y++) {
-                if (hero.getFieldOfView().isVisiable(x, y)) {
+                if (hero.getFieldOfView().isVisible(x, y)) {
                     knownTiles[x][y] = true;
                 }
             }

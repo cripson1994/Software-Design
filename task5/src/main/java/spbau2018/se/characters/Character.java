@@ -1,15 +1,41 @@
 package spbau2018.se.characters;
 
-public interface Character {
-    Drawer drawerCast();
+import spbau2018.se.world.FieldOfView;
 
-    void bump(Character character);
+import java.util.logging.Logger;
 
-    int getAttack();
+public abstract class Character {
+    protected static Logger log = Logger.getLogger("GameLog");
+    protected int x;
+    protected int y;
+    protected int hp;
+    protected int attack;
+    protected FieldOfView fieldOfView;
+    protected Drawer drawer;
 
-    int getHP();
+    public Drawer drawerCast() {
+        return drawer;
+    };
 
-    int x();
+    public abstract void bump(Character character);
 
-    int y();
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getHP() {
+        return hp;
+    }
+
+    public int x() {
+        return x;
+    }
+
+    public int y() {
+        return y;
+    }
+
+    public FieldOfView getFieldOfView() {
+        return fieldOfView;
+    }
 }

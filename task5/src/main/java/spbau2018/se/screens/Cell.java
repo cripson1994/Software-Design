@@ -19,10 +19,6 @@ public class Cell extends JPanel {
         cell = new ImageIcon(path);
     }
 
-    public Item getItem() {
-        return item;
-    }
-
     public void setItem(Item item) {
         this.item = item;
     }

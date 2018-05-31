@@ -15,6 +15,7 @@ public class LoseScreen extends JPanel implements spbau2018.se.screens.Screen {
         jlabel.setForeground(Color.WHITE);
         jlabel.setLocation(235, 650);
         jlabel.setSize(450, 100);
+        log.info("game over");
     }
 
     @Override

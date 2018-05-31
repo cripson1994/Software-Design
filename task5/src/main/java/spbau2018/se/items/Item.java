@@ -27,35 +27,6 @@ public enum Item {
         return type;
     }
 
-    public static Item generateWeapon(int level) {
-        Random rand = new Random();
-        int ind = rand.nextInt(level);
-        Item res = null;
-        switch (ind) {
-            case 0:
-                res = MACE;
-                break;
-            default:
-                res = DAGGER;
-                break;
-        }
-        return res;
-    }
-
-    public static Item generateArmor(int level) {
-        Random rand = new Random();
-        int ind = rand.nextInt(level);
-        Item res = null;
-        switch (ind) {
-            case 0:
-                res = LEATHER_ARMOR;
-                break;
-            default:
-                res = CHAIN_MAIL;
-                break;
-        }
-        return res;
-    }
 
     private int damage;
     private int armore;

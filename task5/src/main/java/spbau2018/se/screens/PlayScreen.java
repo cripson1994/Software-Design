@@ -14,6 +14,7 @@ import spbau2018.se.world.WorldBuilder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.logging.Logger;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -26,12 +27,14 @@ public class PlayScreen implements Screen {
     private MainDrawer main = new MainDrawer();
     private SmallDrawer small = new SmallDrawer();
 
+
     public PlayScreen() {
         world = new WorldBuilder().build(1);
         Pair<Integer, Integer> startCoords = world.getFreeTile();
         hero = new Hero(startCoords.getKey(), startCoords.getValue(), world);
         Pair<Integer, Integer> sc = world.getFreeTile();
         window = new Window(23, 23, startCoords.getKey(), startCoords.getValue());
+        log.info("start new game");
     }
 
     @Override
@@ -59,7 +62,7 @@ public class PlayScreen implements Screen {
                         ii = new ImageIcon(TileType.UNKNOW.getPath());
                     }
                     g.drawImage(ii.getImage(), i * ii.getIconHeight(), j * ii.getIconWidth(), Color.RED, null);
-                    if (!hero.getFieldOfView().isVisiable(x, y)) {
+                    if (!hero.getFieldOfView().isVisible(x, y)) {
                         g.setColor(new Color(0, 0, 0, 200));
                         g.fillRect(i * ii.getIconHeight(), j * ii.getIconWidth(), ii.getIconHeight(), ii.getIconWidth());
                     } else if (world.hasItem(x, y)) {
@@ -160,16 +163,15 @@ public class PlayScreen implements Screen {
                 offsetX = -1;
                 break;
             case VK_ENTER:
-                if (world.hasItem(hero.x(), hero.y()) && !hero.getInventory().isFool()) {
+                if (world.hasItem(hero.x(), hero.y()) && !hero.getInventory().isFull()) {
                     Item item = world.removeItem(hero.x(), hero.y());
                     hero.getInventory().add(item);
+                    log.info("found " + item.type() + ": " + item.name());
                 }
         }
         if (hero.updatePosition(world, offsetX, offsetY)) {
             window.scroll(offsetX, offsetY);
         }
-//        PositionUpdater.updateAll(world, hero);
-
 
         if (hero.getHP() < 0) {
             clearScreen();

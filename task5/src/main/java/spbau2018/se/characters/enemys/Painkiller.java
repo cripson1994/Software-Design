@@ -1,8 +1,8 @@
 package spbau2018.se.characters.enemys;
 
-import spbau2018.se.characters.Character;
 import spbau2018.se.characters.Drawer;
 import spbau2018.se.characters.Hero;
+import spbau2018.se.characters.Position;
 import spbau2018.se.characters.PositionUpdater;
 import javafx.util.Pair;
 import spbau2018.se.world.FieldOfView;
@@ -11,25 +11,20 @@ import spbau2018.se.world.World;
 import javax.swing.*;
 import java.awt.*;
 
-public class Painkiller implements Enemy {
-    private int hp = 100;
-    private int attack = 10;
-    private int x;
-    private int y;
-    private Drawer drawer;
-    private PositionUpdater updater;
-    private boolean agr = false;
-    private FieldOfView fieldOfView;
+public class Painkiller extends Enemy {
+
+
+    {
+        hp = 100;
+        attack = 10;
+    }
 
     private class SkeletonDrawer extends Drawer {
-        int offsetX;
-        int offsetY;
-
         @Override
         public void draw(JFrame frame, int offsetX, int offsetY, FieldOfView heroView) {
             this.offsetX = offsetX;
             this.offsetY = offsetY;
-            if (heroView.isVisiable(x, y)) {
+            if (heroView.isVisible(x, y)) {
                 frame.add(this);
                 frame.validate();
             }
@@ -51,13 +46,13 @@ public class Painkiller implements Enemy {
             if (!detectHero(world, hero.x(), hero.y())) {
                 return;
             }
-            Pair<Integer, Integer> res = BFS(world, x, y, hero.x(), hero.y());
-            if (world.canMoveTo(res.getKey(), res.getValue()) && EnemySet.getEnemy(res.getKey(), res.getValue()) == null) {
-                if (res.getKey() == hero.x() && res.getValue() == hero.y()) {
+            Position res = BFS(world, x, y, hero.x(), hero.y());
+            if (world.canMoveTo(res.x(), res.y()) && EnemySet.getEnemy(res.x(), res.y()) == null) {
+                if (res.x() == hero.x() && res.y() == hero.y()) {
                     hero.bump(Painkiller.this);
                 } else {
-                    x = res.getKey();
-                    y = res.getValue();
+                    x = res.x();
+                    y = res.y();
                 }
             }
         }
@@ -69,61 +64,5 @@ public class Painkiller implements Enemy {
         drawer = new Painkiller.SkeletonDrawer();
         updater = new Painkiller.SkeletonPositionUpdater();
         fieldOfView = new FieldOfView(world);
-    }
-
-
-    @Override
-    public PositionUpdater updaterCast() {
-        return updater;
-    }
-
-    @Override
-    public boolean detectHero(World world, int heroX, int heroY) {
-        fieldOfView.updateVisiable(x, y, world);
-        if (fieldOfView.isVisiable(heroX, heroY)) {
-            agr = true;
-        }
-        return agr;
-    }
-
-    @Override
-    public void die() {
-        drawer.unregister();
-        updater.unregister();
-        EnemySet.remove(this);
-    }
-
-    @Override
-    public void bump(Character character) {
-        hp -= character.getAttack();
-        if (hp <= 0) {
-            die();
-        }
-    }
-
-    @Override
-    public int getAttack() {
-        return attack;
-    }
-
-    @Override
-    public int getHP() {
-        return hp;
-    }
-
-
-    @Override
-    public Drawer drawerCast() {
-        return drawer;
-    }
-
-    @Override
-    public int x() {
-        return x;
-    }
-
-    @Override
-    public int y() {
-        return y;
     }
 }

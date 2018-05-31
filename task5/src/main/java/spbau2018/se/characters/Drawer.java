@@ -9,6 +9,9 @@ import java.util.List;
 
 public abstract class Drawer extends JPanel {
     final private static List<Drawer> updaters = new LinkedList<>();
+    protected int offsetX;
+    protected int offsetY;
+
 
     public Drawer() {
         updaters.add(this);

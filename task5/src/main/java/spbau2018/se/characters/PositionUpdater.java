@@ -1,6 +1,6 @@
 package spbau2018.se.characters;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 import spbau2018.se.world.World;
 
 import java.util.*;
@@ -12,37 +12,37 @@ public abstract class PositionUpdater {
         updaters.add(this);
     }
 
-    protected Pair<Integer, Integer> BFS(World world, int startX, int startY, int finishX, int finishY) {
+    protected Position BFS(World world, int startX, int startY, int finishX, int finishY) {
         boolean[][] visit = new boolean[world.getHeight()][world.getWidth()];
         visit[startX][startY] = true;
-        HashMap<Pair<Integer, Integer>, Pair<Integer, Integer>> path = new HashMap<>();
-        Deque<Pair<Integer, Integer>> deq = new ArrayDeque<>();
-        deq.addLast(new Pair<>(startX, startY));
+        HashMap<Position, Position> path = new HashMap<>();
+        Deque<Position> deq = new ArrayDeque<>();
+        deq.addLast(new Position(startX, startY));
         lab1:
         while (deq.size() > 0) {
-            Pair<Integer, Integer> p = deq.pollFirst();
+            Position p = deq.pollFirst();
             for (int offX = -1; offX <= 1; offX++) {
                 for (int offY = -1; offY <= 1; offY++) {
-                    if (!world.canMoveTo(p.getKey() + offX, p.getValue() + offY)
-                            || visit[p.getKey() + offX][p.getValue() + offY]) {
+                    if (!world.canMoveTo(p.x() + offX, p.y() + offY)
+                            || visit[p.x() + offX][p.y() + offY]) {
                         continue;
                     }
-                    visit[p.getKey() + offX][p.getValue() + offY] = true;
-                    path.put(new Pair<>(p.getKey() + offX, p.getValue() + offY), new Pair<>(p.getKey(), p.getValue()));
-                    deq.addLast(new Pair<>(p.getKey() + offX, p.getValue() + offY));
-                    if (p.getKey() + offX == finishX && p.getValue() + offY == finishY) {
+                    visit[p.x() + offX][p.y() + offY] = true;
+                    path.put(new Position(p.x() + offX, p.y() + offY), new Position(p.x(), p.y()));
+                    deq.addLast(new Position(p.x() + offX, p.y() + offY));
+                    if (p.x() + offX == finishX && p.y() + offY == finishY) {
                         break lab1;
                     }
                 }
             }
         }
 
-        Pair<Integer, Integer> cur = new Pair<>(finishX, finishY);
-        Pair<Integer, Integer> prev = path.get(cur);
+        Position cur = new Position(finishX, finishY);
+        Position prev = path.get(cur);
         if (prev == null) {
-            return new Pair<>(startX, startY);
+            return new Position(startX, startY);
         }
-        while (prev.getKey() != startX || prev.getValue() != startY) {
+        while (prev.x() != startX || prev.y() != startY) {
             cur = prev;
             prev = path.get(cur);
         }

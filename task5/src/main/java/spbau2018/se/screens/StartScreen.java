@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class StartScreen extends JPanel implements Screen {
 
-    JLabel jlabel = new JLabel();
+    private JLabel jlabel = new JLabel();
 
     public StartScreen() {
         jlabel.setText("-- press [enter] to start --");

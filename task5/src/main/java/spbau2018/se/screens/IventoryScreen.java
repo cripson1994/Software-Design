@@ -56,6 +56,7 @@ public class IventoryScreen implements Screen {
                 if (!world.hasItem(hero.x(), hero.y())) {
                     item = hero.getInventory().remove();
                     world.setItem(item, hero.x(), hero.y()); //TODO выбрасывать на ближайшую свободную
+                    log.info("throw out " + item.type() + ": " + item.name());
                 }
                 break;
         }

@@ -18,7 +18,7 @@ public class FieldOfView {
         this.knownTiles = new ArrayList<>();
     }
 
-    public boolean isVisiable(int x, int y) {
+    public boolean isVisible(int x, int y) {
         return knownTiles.contains(hash(x, y));
     }
 

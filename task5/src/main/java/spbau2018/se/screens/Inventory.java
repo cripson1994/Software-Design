@@ -1,6 +1,6 @@
 package spbau2018.se.screens;
 
-import spbau2018.se.characters.Amunation;
+import spbau2018.se.characters.Ammunation;
 import spbau2018.se.items.Item;
 import spbau2018.se.start.MainFrame;
 
@@ -17,7 +17,7 @@ public class Inventory extends JPanel {
     private int itemCount = 0;
     private final int size = 15;
     private ImageIcon background = new ImageIcon("sprites/inventory.png");
-    private Amunation amunation = new Amunation();
+    private Ammunation ammunation = new Ammunation();
 
     public void add(Item item) {
         for (int j = 0; j < dimY; j++) {
@@ -59,7 +59,7 @@ public class Inventory extends JPanel {
                 frame.revalidate();
             }
         }
-        amunation.paint(frame);
+        ammunation.paint(frame);
     }
 
     @Override
@@ -67,11 +67,11 @@ public class Inventory extends JPanel {
         g.drawImage(background.getImage(), 100, 100, 780, 500, null);
     }
 
-    public Amunation getAmunation() {
-        return amunation;
+    public Ammunation getAmmunation() {
+        return ammunation;
     }
 
-    public boolean isFool() {
+    public boolean isFull() {
         return itemCount == size;
     }
 
