@@ -1,8 +1,8 @@
 package OtherTests;
 
 import Commands.TestCommand;
-import environment.Environment;
-import exceptions.BadQuotesException;
+import spbau2018.se.environment.Environment;
+import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

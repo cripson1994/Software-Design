@@ -1,11 +1,11 @@
 package Commands;
 
-import exceptions.BadQuotesException;
+import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import parse.Lexer;
-import perform.ComandManager;
-import prepair.Preparater;
+import spbau2018.se.parse.Lexer;
+import spbau2018.se.perform.ComandManager;
+import spbau2018.se.prepair.Preparater;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

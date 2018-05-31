@@ -1,11 +1,11 @@
 package OtherTests;
 
-import exceptions.BadQuotesException;
+import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.*;
 
-import parse.Lexer;
-import parse.tokens.TypeBigToken;
-import parse.tokens.TypeSmallToken;
+import spbau2018.se.parse.Lexer;
+import spbau2018.se.parse.tokens.TypeBigToken;
+import spbau2018.se.parse.tokens.TypeSmallToken;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

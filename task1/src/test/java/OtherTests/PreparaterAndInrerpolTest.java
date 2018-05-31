@@ -1,12 +1,12 @@
 package OtherTests;
 
-import environment.Environment;
-import exceptions.BadQuotesException;
+import spbau2018.se.environment.Environment;
+import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.*;
 
-import parse.Lexer;
-import prepair.Interpol;
-import prepair.Preparater;
+import spbau2018.se.parse.Lexer;
+import spbau2018.se.prepair.Interpol;
+import spbau2018.se.prepair.Preparater;
 
 import java.util.ArrayList;
 
