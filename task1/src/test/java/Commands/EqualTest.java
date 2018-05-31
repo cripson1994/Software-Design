@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EqualTest extends TestCommand{
     @DisplayName("test Equal")
     @Test
-    void test6() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("x=\"Hello, World\"");
         runManeger("echo $x");

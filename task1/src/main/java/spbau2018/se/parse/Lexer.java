@@ -1,7 +1,5 @@
 package spbau2018.se.parse;
 
-import exceptions.*;
-import parse.tokens.*;
 import spbau2018.se.exceptions.BadQuotesException;
 import spbau2018.se.parse.tokens.BigToken;
 import spbau2018.se.parse.tokens.SmallToken;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Lexer {
     /**
-     * Внутрений буфер
+     * Внутрений буффер
      */
     private String str;
 
@@ -24,14 +22,14 @@ public class Lexer {
     /**
      * Результирующий список больших токенов
      */
-    public ArrayList<BigToken> lst;
+    private ArrayList<BigToken> lst;
 
     /**
      * Кладёт строку в буффер
+     *
      * @param str вводимая строка
      */
-    public void setString(String str)
-    {
+    public void setString(String str) {
         this.str = str;
         ind = 0;
         lst = new ArrayList<>();
@@ -40,11 +38,12 @@ public class Lexer {
     /**
      * Парсит строку на слова (просто слово, слово с равенством и пайп)
      * Результат кладёт в внутрений буффер
+     *
      * @throws BadQuotesException
      */
     public void parse() throws BadQuotesException {
         while (ind < str.length()) {
-            switch(str.charAt(ind)) {
+            switch (str.charAt(ind)) {
                 case '|':
                     lst.add(new BigToken(new ArrayList<SmallToken>(), TypeBigToken.Pipe));
                     break;
@@ -57,10 +56,10 @@ public class Lexer {
             }
             ind++;
         }
-        if (lst.size() > 0 && lst.get(lst.size()-1).getType() == TypeBigToken.Pipe) {
+        if (lst.size() > 0 && lst.get(lst.size() - 1).getType() == TypeBigToken.Pipe) {
             ArrayList<SmallToken> last = new ArrayList<>();
             last.add(new SmallToken("", TypeSmallToken.Command));
-            lst.add(new BigToken(last,TypeBigToken.Word));
+            lst.add(new BigToken(last, TypeBigToken.Word));
         }
     }
 
@@ -76,60 +75,63 @@ public class Lexer {
 
     /**
      * Расщипляет слова на мелкие токены, типизирует их и упаковывает в результирующий список
+     *
      * @throws BadQuotesException
      */
     private void setToken() throws BadQuotesException {
         TypeBigToken type = TypeBigToken.Word;
         ArrayList<SmallToken> lst = new ArrayList<>();
-        while (ind < str.length() && str.charAt(ind) != ' ' && str.charAt(ind) != '|' ) {
+        while (ind < str.length() && str.charAt(ind) != ' ' && str.charAt(ind) != '|') {
             switch (str.charAt(ind)) {
                 case '=':
-                    if(type == TypeBigToken.Word) {
+                    if (type == TypeBigToken.Word) {
                         type = TypeBigToken.Equal;
-                        lst.add(new SmallToken("=",TypeSmallToken.Equal));
+                        lst.add(new SmallToken("=", TypeSmallToken.Equal));
                     }
                     break;
                 case '\'':
                     ind++;
-                    lst.add(new SmallToken(getQuotedString('\''),TypeSmallToken.SingleQuotes));
+                    lst.add(new SmallToken(getQuotedString('\''), TypeSmallToken.SingleQuotes));
                     break;
                 case '\"':
                     ind++;
-                    lst.add(new SmallToken(getQuotedString('\"'),TypeSmallToken.DoubleQuotes));
+                    lst.add(new SmallToken(getQuotedString('\"'), TypeSmallToken.DoubleQuotes));
                     break;
                 case '$':
                     ind++;
-                    lst.add(new SmallToken(getWord(),TypeSmallToken.Variable));
+                    lst.add(new SmallToken(getWord(), TypeSmallToken.Variable));
                     break;
                 default:
-                    lst.add(new SmallToken(getWord(),TypeSmallToken.Command));
+                    lst.add(new SmallToken(getWord(), TypeSmallToken.Command));
             }
             ind++;
         }
         ind--;
-        this.lst.add(new BigToken(lst,type));
+        this.lst.add(new BigToken(lst, type));
     }
 
     /**
      * Выделяет токен команды
+     *
      * @return строка, соответствующая команде
      */
     private String getWord() {
         int begInd = ind;
         while (ind < str.length()) {
-            if(str.charAt(ind) == '\'' || str.charAt(ind) == '\"' || str.charAt(ind) == '$' || str.charAt(ind) == '|'
+            if (str.charAt(ind) == '\'' || str.charAt(ind) == '\"' || str.charAt(ind) == '$' || str.charAt(ind) == '|'
                     || str.charAt(ind) == ' ' || str.charAt(ind) == '=') {
                 ind--;
-                return str.substring(begInd,ind+1);
+                return str.substring(begInd, ind + 1);
             }
             ind++;
         }
-        return str.substring(begInd,ind);
+        return str.substring(begInd, ind);
     }
 
 
     /**
      * Выделяет часть слова под кавычками
+     *
      * @param type тип кавычек
      * @return строка под кавычками
      * @throws BadQuotesException если кавычки не закрыты
@@ -137,8 +139,8 @@ public class Lexer {
     private String getQuotedString(char type) throws BadQuotesException {
         int begInd = ind;
         while (ind < str.length()) {
-            if(str.charAt(ind) == type) {
-                return str.substring(begInd,ind);
+            if (str.charAt(ind) == type) {
+                return str.substring(begInd, ind);
             }
             ind++;
         }

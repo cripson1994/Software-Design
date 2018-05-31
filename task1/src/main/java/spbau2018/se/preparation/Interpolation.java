@@ -1,4 +1,4 @@
-package spbau2018.se.prepair;
+package spbau2018.se.preparation;
 
 import spbau2018.se.environment.Environment;
 
@@ -6,20 +6,21 @@ import spbau2018.se.environment.Environment;
 /**
  * Класс для интерполяции строк
  */
-public class Interpol {
+public class Interpolation {
     /**
      * Внутренний буффер, в который записывается результат
      */
     private String str;
     private int ind;
 
-    public Interpol() {
+    public Interpolation() {
         this.str = "";
         ind = 0;
     }
 
     /**
      * Кладёт в буффер строку для интерполяции
+     *
      * @param str
      */
     public void setString(String str) {
@@ -42,22 +43,23 @@ public class Interpol {
                 ind++;
             }
         }
-        str=buf.toString();
+        str = buf.toString();
     }
 
     /**
      * Ищет максимально возможное валидное имя переменной в строке после знака $
+     *
      * @return - имя переменной
      */
     private String getVariable() {
         int begInd = ind;
-        if(!Character.isLetter(str.charAt(ind))) {
+        if (!Character.isLetter(str.charAt(ind))) {
             return "";
         }
         while (ind < str.length() && (Character.isLetter(str.charAt(ind)) || Character.isDigit(str.charAt(ind)))) {
             ind++;
         }
-        return str.substring(begInd,ind);
+        return str.substring(begInd, ind);
     }
 
     public String getStr() {

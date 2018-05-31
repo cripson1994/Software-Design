@@ -5,8 +5,8 @@ import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.*;
 
 import spbau2018.se.parse.Lexer;
-import spbau2018.se.prepair.Interpol;
-import spbau2018.se.prepair.Preparater;
+import spbau2018.se.preparation.Interpolation;
+import spbau2018.se.preparation.Preparater;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ public class PreparaterAndInrerpolTest {
 
     Lexer lex = new Lexer();
     Preparater p = new Preparater();
-    Interpol i = new Interpol();
+    Interpolation i = new Interpolation();
 
     ArrayList<String> getString(String input) throws BadQuotesException {
         lex.setString(input);
@@ -35,23 +35,23 @@ public class PreparaterAndInrerpolTest {
     @DisplayName("test interpol")
     @Test
     void test1() {
-        Environment.set("x","Hello, World");
-        Environment.set("y"," value from y");
-        Environment.set("y123y"," Its a crazy name!");
+        Environment.set("x", "Hello, World");
+        Environment.set("y", " value from y");
+        Environment.set("y123y", " Its a crazy name!");
 
-        assertEquals(getValue("$x"),"Hello, World");
-        assertEquals(getValue("x"),"x");
-        assertEquals(getValue("$x$y"),"Hello, World value from y");
-        assertEquals(getValue("Hello, it\'s $y"),"Hello, it\'s  value from y");
-        assertEquals(getValue("y123y$y123y"),"y123y Its a crazy name!");
+        assertEquals(getValue("$x"), "Hello, World");
+        assertEquals(getValue("x"), "x");
+        assertEquals(getValue("$x$y"), "Hello, World value from y");
+        assertEquals(getValue("Hello, it\'s $y"), "Hello, it\'s  value from y");
+        assertEquals(getValue("y123y$y123y"), "y123y Its a crazy name!");
     }
 
     @DisplayName("test prepator")
     @Test
     void test2() throws BadQuotesException {
         ArrayList<String> val = new ArrayList<>();
-        Environment.set("x","value from x");
-        Environment.set("y","o");
+        Environment.set("x", "value from x");
+        Environment.set("y", "o");
 
 
         val.add("echo");

@@ -10,15 +10,16 @@ import java.util.ArrayList;
 /**
  * Класс, контролирующий выполнение цепочки команд
  */
-public class ComandManager {
+public class CommandManager {
     /**
      * Внутренний буффер последовательности команд и аргументов
      */
-    ArrayList<String> chain;
-    int ind;
+    private ArrayList<String> chain;
+    private int ind;
 
     /**
      * Кладёт во внутренний буффер последовательность команд и аргументов
+     *
      * @param chain - правильный список команд
      */
     public void setChain(ArrayList<String> chain) {
@@ -26,27 +27,26 @@ public class ComandManager {
         ind = 0;
     }
 
-    private Thread printThread = null;
+    private Thread printThread;
 
 
     /**
      * Запускает и контролирует выполнение команд из внутреннего буффера
-     * Выделяет пул потоков, связывает их с помощью PipedStream и запускает команды в этом пуле
-     * @throws IOException
+     * Cвязывает последовательные команды с помощью PipedStream
      */
     public void manage() throws IOException {
-        PipedInputStream oldInput  = new PipedInputStream();
+        PipedInputStream oldInput = new PipedInputStream();
         final PipedOutputStream errOutput = new PipedOutputStream();
         final PipedInputStream errInput = new PipedInputStream(errOutput);
 
         while (ind < chain.size()) {
             final PipedOutputStream output = new PipedOutputStream();
-            final PipedInputStream input  = new PipedInputStream(output);
+            final PipedInputStream input = new PipedInputStream(output);
             int comInd = ind;
             ind++;
 
-            CommandInterface cmd = getCommand(comInd, getArgs());
-            Command command = new Command(cmd,output,oldInput, errOutput);
+            AbstactCommand cmd = getCommand(comInd, getArgs());
+            Command command = new Command(cmd, output, oldInput, errOutput);
 
             command.start();
 
@@ -71,6 +71,7 @@ public class ComandManager {
 
     /**
      * Вывод из потока в консоль
+     *
      * @param input - поток для считывания
      */
     private void print(PipedInputStream input) {
@@ -86,6 +87,7 @@ public class ComandManager {
 
     /**
      * Находит в буфферной цепочки аргументы для отдельной команды
+     *
      * @return
      */
     private ArrayList<String> getArgs() {
@@ -101,26 +103,27 @@ public class ComandManager {
 
     /**
      * Распознование команд
+     *
      * @param comInd - индекс по которому находится имя команды в цепочке
-     * @param args - аргументы команды
+     * @param args   - аргументы команды
      * @return - сконтструированый тип команды
      */
-    private CommandInterface getCommand (int comInd, ArrayList<String> args) {
-        CommandInterface cmd = null;
+    private AbstactCommand getCommand(int comInd, ArrayList<String> args) {
+        AbstactCommand cmd = null;
 
         switch (chain.get(comInd).toLowerCase()) {
             case "echo":
                 cmd = new Echo(args);
                 break;
             case "cat":
-                if(args.size() > 0) {
+                if (args.size() > 0) {
                     cmd = new Cat(args);
                 } else {
                     cmd = new Cat();
                 }
                 break;
             case "wc":
-                if(args.size() > 0) {
+                if (args.size() > 0) {
                     cmd = new Wc(args);
                 } else {
                     cmd = new Wc();
@@ -137,15 +140,16 @@ public class ComandManager {
                 cmd = new Exit(flag1);
                 break;
             case "__equal__":
-                boolean flag2 = ((chain.size() - comInd) == 3);
-                cmd = new Equal(chain.get(comInd + 1),chain.get(comInd + 2),flag2);
+                final int numberOfAssignmentTokens = 3;
+                boolean isSignificantEquality = ((chain.size() - comInd) == numberOfAssignmentTokens);
+                cmd = new Equal(chain.get(comInd + 1), chain.get(comInd + 2), isSignificantEquality);
                 break;
             case "":
                 cmd = new Empty();
                 break;
             default:
                 if (args.size() > 0) {
-                    cmd = new OtherCommands(chain.get(comInd).toLowerCase(),args);
+                    cmd = new OtherCommands(chain.get(comInd).toLowerCase(), args);
                 } else {
                     cmd = new OtherCommands(chain.get(comInd).toLowerCase());
                 }
@@ -156,6 +160,7 @@ public class ComandManager {
 
     /**
      * Метод для тестов
+     *
      * @return поток вывода
      */
 

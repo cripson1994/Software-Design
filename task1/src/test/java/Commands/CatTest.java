@@ -8,11 +8,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CatTest extends TestCommand{
+public class CatTest extends TestCommand {
 
     @DisplayName("test cat")
     @Test
-    void test2() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("cat ");
         t = m.getPrintThread();
@@ -41,7 +41,7 @@ public class CatTest extends TestCommand{
         outContent.reset();
         t = m.getPrintThread();
         t.join(mills);
-        assertEquals( "select b.starttime, f.name from\n" +
+        assertEquals("select b.starttime, f.name from\n" +
                 "cd.bookings b, cd.facilities f where(\n" +
                 "  b.starttime >= '2012-09-21' and b.starttime < '2012-09-22' and f.name like '%Tennis Court%'\n" +
                 "  ) order by b.starttime\n" +

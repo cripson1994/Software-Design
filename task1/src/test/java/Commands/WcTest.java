@@ -8,11 +8,11 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WcTest extends TestCommand{
+public class WcTest extends TestCommand {
 
     @DisplayName("test wc")
     @Test
-    void test3() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("wc ");
         t = m.getPrintThread();

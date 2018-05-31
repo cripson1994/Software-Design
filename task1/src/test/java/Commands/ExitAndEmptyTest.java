@@ -12,7 +12,7 @@ public class ExitAndEmptyTest extends TestCommand{
 
     @DisplayName("test exit and empty")
     @Test
-    void test7() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("");
         t = m.getPrintThread();

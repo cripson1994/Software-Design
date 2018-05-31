@@ -12,7 +12,7 @@ public class EchoTest extends TestCommand{
 
     @DisplayName("test echo")
     @Test
-    void test1() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("echo 123");
         t = m.getPrintThread();

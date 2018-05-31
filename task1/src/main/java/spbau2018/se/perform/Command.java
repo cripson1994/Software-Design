@@ -1,13 +1,15 @@
 package spbau2018.se.perform;
 
-import spbau2018.se.environment.commands.CommandInterface;
+import spbau2018.se.environment.commands.AbstactCommand;
+
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 /**
- * Класс, реализующий интерфейс Thread, позволяющий выполнять команды в различных потоках
+ * Класс, реализующий интерфейс Thread
  */
-public class Command extends Thread{
+public class Command extends Thread {
 
     /**
      * Входной поток команды
@@ -22,9 +24,9 @@ public class Command extends Thread{
      */
     private final PipedOutputStream errOutput;
 
-    private CommandInterface cmd;
+    private AbstactCommand cmd;
 
-    public Command(CommandInterface cmd, PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
+    public Command(AbstactCommand cmd, PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
         this.input = input;
         this.output = output;
         this.errOutput = errOutput;
@@ -36,7 +38,11 @@ public class Command extends Thread{
      */
     @Override
     public void run() {
-        cmd.eval(output,input, errOutput);
+        try {
+            cmd.eval(output, input, errOutput);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

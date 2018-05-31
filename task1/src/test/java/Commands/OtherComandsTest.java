@@ -12,7 +12,7 @@ public class OtherComandsTest extends TestCommand {
 
     @DisplayName("test other commands")
     @Test
-    void test5() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("ls test_dir");
         t = m.getPrintThread();

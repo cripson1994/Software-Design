@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  * Класс-обёртка для комманды grep
  */
-public class Grep extends CommandInterface{
+public class Grep extends AbstactCommand {
 
     /**
      * Поля, необходимые для парсинга аргументов
@@ -40,11 +40,14 @@ public class Grep extends CommandInterface{
 
     static {
         Option optionI = new Option("i", "ignore-case", false, "Perform case insensitive matching. " +
-                "By default, grep is case sensitive.");;
+                "By default, grep is case sensitive.");
+        ;
         Option optionW = new Option("w", "word-regexp", false, "The expression is searched for as " +
-                "a word (as if surrounded by `[[:<:]]' and `[[:>:]]'; see re_format(7)).");;
+                "a word (as if surrounded by `[[:<:]]' and `[[:>:]]'; see re_format(7)).");
+        ;
         Option optionA = new Option("A", "after-context", true, "Print num lines of trailing context " +
-                "after each match. See also the -B and -C options.");;
+                "after each match. See also the -B and -C options.");
+        ;
         optionA.setArgs(1);
         optionA.setArgName("num");
         posixOptions = new Options();
@@ -63,6 +66,7 @@ public class Grep extends CommandInterface{
 
     /**
      * Препроцессинг, инициализурующий функцианальные поля grep для различных ключей
+     *
      * @throws ParseException
      * @throws NumberFormatException
      */
@@ -117,16 +121,16 @@ public class Grep extends CommandInterface{
 
     }
 
-    private void evalGrep (String[] args, PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
+    private void evalGrep(String[] args, PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
         if (args.length > 1) {
             fromFile(output, errOutput);
         } else {
-            fromStream(output,input, errOutput);
+            fromStream(output, input, errOutput);
         }
     }
 
     @Override
-    protected void fromStream (PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
+    protected void fromStream(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
         String pattern = grepArgs[0];
         Pattern r = Pattern.compile(pattern);
         Matcher m = null;
@@ -141,13 +145,13 @@ public class Grep extends CommandInterface{
             }
             input.close();
             List<String> lines = new ArrayList(Arrays.asList(buf.toString().split("\n")));
-            fillStream(lines,prefix,output,m,r);
+            fillStream(lines, prefix, output, m, r);
         } catch (IOException e) {
         }
     }
 
     @Override
-    protected  void fromFile (PipedOutputStream output, PipedOutputStream errOutput)  {
+    protected void fromFile(PipedOutputStream output, PipedOutputStream errOutput) {
         String pattern = grepArgs[0];
         Pattern r = Pattern.compile(pattern);
         Matcher m = null;
@@ -159,7 +163,7 @@ public class Grep extends CommandInterface{
             List<String> lines = null;
             try {
                 lines = Files.readAllLines(Paths.get(grepArgs[i]), StandardCharsets.UTF_8);
-                fillStream(lines,prefix,output,m,r);
+                fillStream(lines, prefix, output, m, r);
             } catch (IOException e) {
                 errBuilder.append("grep: " + e.getMessage() + ": No such file or directory\n");
             }
@@ -168,15 +172,16 @@ public class Grep extends CommandInterface{
 
     /**
      * Заполнение выходного потока grep
-     * @param lines - текущая строка
+     *
+     * @param lines  - текущая строка
      * @param prefix - вспомогательный аргумент для красивого вывода
      * @param output - поток вывода
-     * @param m - матчер регулярных выражений
-     * @param r - паттерн регулярного выражения
+     * @param m      - матчер регулярных выражений
+     * @param r      - паттерн регулярного выражения
      * @throws IOException
      */
-    private void fillStream (List<String> lines, String prefix, PipedOutputStream output,
-                             Matcher m, Pattern r) throws IOException {
+    private void fillStream(List<String> lines, String prefix, PipedOutputStream output,
+                            Matcher m, Pattern r) throws IOException {
         int counter = lineCount + 1;
         for (String line : lines) {
             m = r.matcher(ignoreCase.apply(line));
@@ -186,19 +191,20 @@ public class Grep extends CommandInterface{
             } else if (counter <= lineCount) {
                 output.write((prefix + line + "\n").getBytes());
             }
-            counter ++;
+            counter++;
             output.flush();
         }
     }
 
     /**
      * Красивый вывод ошибок
+     *
      * @param errOutput
      */
-    private void printHelp (PipedOutputStream errOutput) {
+    private void printHelp(PipedOutputStream errOutput) {
         StringWriter out = new StringWriter();
         PrintWriter writer = new PrintWriter(out);
-        helpFormatter.printHelp(writer,80,"grep",null,posixOptions,1,4,null,true);
+        helpFormatter.printHelp(writer, 80, "grep", null, posixOptions, 1, 4, null, true);
         writer.flush();
         errBuilder.append(out.toString());
     }

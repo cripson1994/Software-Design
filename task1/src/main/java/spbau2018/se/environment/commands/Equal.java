@@ -9,37 +9,34 @@ import java.io.PipedOutputStream;
 /**
  * Класс-обёртка команды присваивания
  */
-public class Equal extends CommandInterface{
+public class Equal extends AbstactCommand {
     /**
      * Имя переменной
      */
-    String variable;
+    private String variable;
     /**
      * Присваиваемое значение
      */
-    String value;
+    private String value;
     /**
      * Флаг, отвечающий за то, должно ли проходить присваивания
      * Нужен для имитации присваивания в bash
      */
-    boolean flag;
+    private boolean shouldPass;
 
 
-    public Equal(String variable, String value, boolean flag) {
+    public Equal(String variable, String value, boolean shouldPass) {
         this.variable = variable;
         this.value = value;
-        this.flag = flag;
+        this.shouldPass = shouldPass;
     }
 
 
     @Override
-    public void eval(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
-        if (flag == true) {
-            Environment.set(variable,value);
+    public void eval(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) throws IOException {
+        if (shouldPass) {
+            Environment.set(variable, value);
         }
-        try {
-            output.close();
-        } catch (IOException e) {
-        }
+        output.close();
     }
 }

@@ -12,7 +12,7 @@ public class PwdTest extends TestCommand {
 
     @DisplayName("test pwd")
     @Test
-    void test4() throws BadQuotesException, IOException, InterruptedException {
+    void test() throws BadQuotesException, IOException, InterruptedException {
 
         runManeger("pwd");
         t = m.getPrintThread();

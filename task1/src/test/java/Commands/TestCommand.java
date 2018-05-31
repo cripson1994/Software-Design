@@ -4,18 +4,18 @@ import spbau2018.se.exceptions.BadQuotesException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import spbau2018.se.parse.Lexer;
-import spbau2018.se.perform.ComandManager;
-import spbau2018.se.prepair.Preparater;
+import spbau2018.se.perform.CommandManager;
+import spbau2018.se.preparation.Preparater;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
 public abstract class TestCommand {
-    public int mills = 500;
+    public int mills = 600;
     public Lexer lex = new Lexer();
     public Preparater p = new Preparater();
-    public ComandManager m = new ComandManager();
+    public CommandManager m = new CommandManager();
     public Thread t;
 
     public final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

@@ -10,22 +10,21 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CommandManagerTest extends TestCommand{
+public class CommandManagerTest extends TestCommand {
     @DisplayName("test result")
     @Test
     void test1() throws BadQuotesException, IOException, InterruptedException {
-        Environment.set("x","ho");
-        Environment.set("y","Hello, World");
-        Environment.set("z","wc");
-        Environment.set("a","ep");
-        Environment.set("b","echo from b");
+        Environment.set("x", "ho");
+        Environment.set("y", "Hello, World");
+        Environment.set("z", "wc");
+        Environment.set("a", "ep");
+        Environment.set("b", "echo from b");
 
 
         runManeger("echo 123 | cat");
         t = m.getPrintThread();
         t.join(mills);
         assertEquals("123\n", outContent.toString());
-
 
 
         runManeger("$b");
@@ -57,7 +56,7 @@ public class CommandManagerTest extends TestCommand{
     @DisplayName("test error")
     @Test
     void test2() throws BadQuotesException, IOException, InterruptedException {
-        Environment.set("x","\'echo \'");
+        Environment.set("x", "\'echo \'");
 
         runManeger("ech");
         t = m.getPrintThread();

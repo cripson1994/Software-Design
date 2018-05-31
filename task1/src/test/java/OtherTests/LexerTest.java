@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import spbau2018.se.parse.Lexer;
 import spbau2018.se.parse.tokens.TypeBigToken;
 import spbau2018.se.parse.tokens.TypeSmallToken;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -104,7 +105,7 @@ public class LexerTest {
             type.add(TypeSmallToken.DoubleQuotes);
             type.add(TypeSmallToken.Variable);
             type.add(TypeSmallToken.Command);
-            assertEquals(getSmallType("        cat \"file.txt file2.txt\"   $x            |wc"),type);
+            assertEquals(getSmallType("        cat \"file.txt file2.txt\"   $x            |wc"), type);
 
             type.clear();
             type.add(TypeSmallToken.Command);
@@ -113,7 +114,7 @@ public class LexerTest {
             type.add(TypeSmallToken.DoubleQuotes);
             type.add(TypeSmallToken.SingleQuotes);
             type.add(TypeSmallToken.Command);
-            assertEquals(getSmallType("x=ec\"h$y\"  \'1234\'|    pwd"),type);
+            assertEquals(getSmallType("x=ec\"h$y\"  \'1234\'|    pwd"), type);
         }
 
         @DisplayName("test Big token type")
@@ -135,14 +136,14 @@ public class LexerTest {
             type.add(TypeBigToken.Word);
             type.add(TypeBigToken.Pipe);
             type.add(TypeBigToken.Word);
-            assertEquals(getBigType("        cat \"file.txt file2.txt\"   $x            |wc"),type);
+            assertEquals(getBigType("        cat \"file.txt file2.txt\"   $x            |wc"), type);
 
             type.clear();
             type.add(TypeBigToken.Equal);
             type.add(TypeBigToken.Word);
             type.add(TypeBigToken.Pipe);
             type.add(TypeBigToken.Word);
-            assertEquals(getBigType("x=ec\"h$y\"  \'1234\'|    pwd"),type);
+            assertEquals(getBigType("x=ec\"h$y\"  \'1234\'|    pwd"), type);
         }
 
     }

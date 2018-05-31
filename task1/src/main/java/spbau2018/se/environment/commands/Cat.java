@@ -13,49 +13,42 @@ import java.util.List;
 /**
  * Класс-обёртка команды cat
  */
-public class Cat extends CommandInterface{
+public class Cat extends AbstactCommand {
     public Cat(ArrayList<String> file) {
         this.args = file;
     }
 
     public Cat() {
-        this.args = null;
     }
 
     @Override
-    public void eval(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
+    public void eval(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) throws IOException {
         fork(output, input, errOutput);
     }
 
     @Override
-    protected void fromStream(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
-        try {
-            int data = input.read();
-            while (data != -1) {
-                output.write((char) data);
-                data = input.read();
-            }
-            output.flush();
-        } catch (IOException e) {
+    protected void fromStream(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) throws IOException {
+        int data = input.read();
+        while (data != -1) {
+            output.write((char) data);
+            data = input.read();
         }
+        output.flush();
     }
 
     @Override
-    protected void fromFile(PipedOutputStream output, PipedOutputStream errOutput) {
-        for (int i = 0; i < args.size(); i++) {
+    protected void fromFile(PipedOutputStream output, PipedOutputStream errOutput) throws IOException {
+        for (String arg : args) {
             List<String> lines = null;
             try {
-                lines = Files.readAllLines(Paths.get(args.get(i)), StandardCharsets.UTF_8);
+                lines = Files.readAllLines(Paths.get(arg), StandardCharsets.UTF_8);
                 for (String line : lines) {
                     output.write((line + "\n").getBytes());
                     output.flush();
                 }
             } catch (IOException e) {
-                try {
-                    errOutput.write(("cat: " + e.getMessage() + ": No such file or directory\n").getBytes());
-                    errOutput.flush();
-                } catch (IOException e1) {
-                }
+                errOutput.write(("cat: " + e.getMessage() + ": No such file or directory\n").getBytes());
+                errOutput.flush();
             }
         }
     }

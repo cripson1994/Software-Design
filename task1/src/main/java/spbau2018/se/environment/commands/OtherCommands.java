@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Класс-обёртка для вспомогательной команды otherCommand
  * Запускает команду из системы, если такая отсутсвует в данном окружение
  */
-public class OtherCommands extends CommandInterface {
+public class OtherCommands extends AbstactCommand {
     /**
      * Название команды
      */
@@ -27,7 +27,7 @@ public class OtherCommands extends CommandInterface {
     public void eval(PipedOutputStream output, PipedInputStream input, PipedOutputStream errOutput) {
 
 
-        String[] command = new String[args.size()+1];
+        String[] command = new String[args.size() + 1];
         command[0] = cmd;
         for (int i = 0; i < args.size(); i++) {
             command[i + 1] = args.get(i);
@@ -49,14 +49,12 @@ public class OtherCommands extends CommandInterface {
             }
             return;
         }
-        OutputStream stdin = process.getOutputStream ();
-        InputStream stdout = process.getInputStream ();
-        BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin));
+        OutputStream stdin = process.getOutputStream();
+        InputStream stdout = process.getInputStream();
 
-        pipeFromStream(input,writer);
-
-        try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin))) {
+            pipeFromStream(input, writer);
             int data = reader.read();
             while (data != -1) {
                 output.write(data);
@@ -65,15 +63,15 @@ public class OtherCommands extends CommandInterface {
             }
             output.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
     }
 
     /**
      * Записывает предаваемый поток в stdin буффер запускаемой из системы команды
-     * @param input - Входной поток
-     * @param writer - stdin буффер запускаемой команды
+     *
+     * @param input  Входной поток
+     * @param writer stdin буффер запускаемой команды
      */
     private void pipeFromStream(PipedInputStream input, BufferedWriter writer) {
         try {
@@ -86,9 +84,9 @@ public class OtherCommands extends CommandInterface {
             input.close();
             writer.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
 
 
 }
