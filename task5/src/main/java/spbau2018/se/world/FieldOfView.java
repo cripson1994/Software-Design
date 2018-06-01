@@ -3,19 +3,21 @@ package spbau2018.se.world;
 import spbau2018.se.screens.Line;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FieldOfView {
-    private final int viewRadius = 8;
-    private List<Integer> knownTiles;
+    private int viewRadius;
+    private Set<Integer> knownTiles;
 
     private int hash(int x, int y) {
         return x * 10000 + y;
     }
 
-    public FieldOfView(World world) {
-        this.knownTiles = new ArrayList<>();
+    public FieldOfView(int viewRadius) {
+        this.viewRadius = viewRadius;
+        this.knownTiles = new HashSet<>();
     }
 
     public boolean isVisible(int x, int y) {
@@ -31,7 +33,7 @@ public class FieldOfView {
     }
 
     public void updateVisiable(int a, int b, World world) {
-        knownTiles = new ArrayList<>();
+        knownTiles = new HashSet<>();
         List<Point> line;
         for (int x = -viewRadius; x <= +viewRadius; x++) {
             for (int y = -viewRadius; y <= +viewRadius; y++) {

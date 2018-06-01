@@ -4,7 +4,7 @@ import com.github.czyzby.noise4j.map.Grid;
 import com.github.czyzby.noise4j.map.generator.room.dungeon.DungeonGenerator;
 
 public class WorldBuilder {
-    public World build(int level) {
+    public World buildRandom(int level) {
         int size = 50;
         final Grid grid = new Grid(size);
         buildGrid(grid);
@@ -15,7 +15,20 @@ public class WorldBuilder {
                 tiles[i][j] = new Tile(type);
             }
         }
-        return new World(tiles, level);
+        return new World(tiles, level, true);
+    }
+
+    public World build(int[][] grid) {
+        int height = grid.length;
+        int width = grid[0].length;
+        Tile[][] tiles = new Tile[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                TileType type = grid[i][j] == 1 ? TileType.WALL : TileType.FLOOR;
+                tiles[i][j] = new Tile(type);
+            }
+        }
+        return new World(tiles, 0, false);
     }
 
     private void buildGrid(Grid grid) {

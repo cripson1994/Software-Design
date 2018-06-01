@@ -2,6 +2,7 @@ package spbau2018.se.screens;
 
 import spbau2018.se.characters.Drawer;
 import spbau2018.se.characters.Hero;
+import spbau2018.se.characters.Position;
 import spbau2018.se.characters.PositionUpdater;
 import spbau2018.se.characters.enemys.EnemySet;
 import spbau2018.se.items.Item;
@@ -14,7 +15,6 @@ import spbau2018.se.world.WorldBuilder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.logging.Logger;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -29,11 +29,10 @@ public class PlayScreen implements Screen {
 
 
     public PlayScreen() {
-        world = new WorldBuilder().build(1);
-        Pair<Integer, Integer> startCoords = world.getFreeTile();
-        hero = new Hero(startCoords.getKey(), startCoords.getValue(), world);
-        Pair<Integer, Integer> sc = world.getFreeTile();
-        window = new Window(23, 23, startCoords.getKey(), startCoords.getValue());
+        world = new WorldBuilder().buildRandom(1);
+        Position startCoords = world.getFreeTile();
+        hero = new Hero(startCoords.x(), startCoords.y());
+        window = new Window(23, 23, startCoords.x(), startCoords.y());
         log.info("start new game");
     }
 

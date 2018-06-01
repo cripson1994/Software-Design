@@ -12,7 +12,7 @@ public abstract class PositionUpdater {
         updaters.add(this);
     }
 
-    protected Position BFS(World world, int startX, int startY, int finishX, int finishY) {
+    protected List<Position> BFS(World world, int startX, int startY, int finishX, int finishY) {
         boolean[][] visit = new boolean[world.getHeight()][world.getWidth()];
         visit[startX][startY] = true;
         HashMap<Position, Position> path = new HashMap<>();
@@ -37,16 +37,29 @@ public abstract class PositionUpdater {
             }
         }
 
+        List<Position> res = new ArrayList<>();
         Position cur = new Position(finishX, finishY);
         Position prev = path.get(cur);
+        res.add(cur);
         if (prev == null) {
-            return new Position(startX, startY);
+//            return new Position(startX, startY);
+            return res;
         }
+        res.add(prev);
         while (prev.x() != startX || prev.y() != startY) {
             cur = prev;
             prev = path.get(cur);
+            res.add(prev);
         }
-        return cur;
+        return res;
+    }
+
+    public Position getOtimalOffset(World world, int startX, int startY, int finishX, int finishY, int offset) {
+        List<Position> res = BFS(world, startX, startY, finishX, finishY);
+        if (res.size() < offset) {
+            return null;
+        }
+        return res.get(res.size() - offset - 1);
     }
 
     public void unregister() {

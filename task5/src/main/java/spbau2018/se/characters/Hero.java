@@ -38,11 +38,11 @@ public class Hero extends spbau2018.se.characters.Character {
         }
     }
 
-    public Hero(int x, int y, World world) {
+    public Hero(int x, int y) {
         this.x = x;
         this.y = y;
         drawer = new HeroDrawer();
-        fieldOfView = new FieldOfView(world);
+        fieldOfView = new FieldOfView(8);
     }
 
     public boolean updatePosition(World world, int offsetX, int offsetY) {

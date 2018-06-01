@@ -46,7 +46,7 @@ public class Painkiller extends Enemy {
             if (!detectHero(world, hero.x(), hero.y())) {
                 return;
             }
-            Position res = BFS(world, x, y, hero.x(), hero.y());
+            Position res = getOtimalOffset(world, x, y, hero.x(), hero.y(), 1);
             if (world.canMoveTo(res.x(), res.y()) && EnemySet.getEnemy(res.x(), res.y()) == null) {
                 if (res.x() == hero.x() && res.y() == hero.y()) {
                     hero.bump(Painkiller.this);
@@ -58,11 +58,11 @@ public class Painkiller extends Enemy {
         }
     }
 
-    public Painkiller(int x, int y, World world) {
+    public Painkiller(int x, int y) {
         this.x = x;
         this.y = y;
         drawer = new Painkiller.SkeletonDrawer();
         updater = new Painkiller.SkeletonPositionUpdater();
-        fieldOfView = new FieldOfView(world);
+        fieldOfView = new FieldOfView(8);
     }
 }

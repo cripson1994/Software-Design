@@ -8,8 +8,8 @@ public enum Item {
     MACE("sprites/weapons/mace.gif", 5, 0, ItemType.WEAPON),
     DAGGER("sprites/weapons/dagger.gif", 15, 0, ItemType.WEAPON),
 
-    LEATHER_ARMOR("sprites/armore/leatherArmor.gif", 0, 10, ItemType.ARMORE),
-    CHAIN_MAIL("sprites/armore/chainMail.gif", 0, 5, ItemType.ARMORE);
+    LEATHER_ARMOR("sprites/armore/leatherArmor.gif", 0, 5, ItemType.ARMORE),
+    CHAIN_MAIL("sprites/armore/chainMail.gif", 0, 10, ItemType.ARMORE);
 
     public int getDamage() {
         return damage;

@@ -1,6 +1,7 @@
 package spbau2018.se.characters.enemys;
 
 import javafx.util.Pair;
+import spbau2018.se.characters.Position;
 import spbau2018.se.world.World;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class EnemySet {
 
     public static void init(World world, int level) {
         for (int i = 0; i < 15; i++) {
-            Pair<Integer, Integer> freeTail = world.getFreeTile();
-            enemies.add(new Painkiller(freeTail.getKey(), freeTail.getValue(), world));
+            Position freeTail = world.getFreeTile();
+            enemies.add(new Painkiller(freeTail.x(), freeTail.y()));
         }
     }
 

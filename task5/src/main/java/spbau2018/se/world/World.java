@@ -1,6 +1,7 @@
 package spbau2018.se.world;
 
 import spbau2018.se.characters.Hero;
+import spbau2018.se.characters.Position;
 import spbau2018.se.characters.enemys.Enemy;
 import spbau2018.se.characters.enemys.EnemySet;
 import javafx.util.Pair;
@@ -15,21 +16,23 @@ public class World {
     private int height;
     private Random random = new Random();
 
-    World(Tile[][] tiles, int level) {
+    World(Tile[][] tiles, int level, boolean enemys) {
         this.tiles = tiles;
         this.width = tiles.length;
         this.height = tiles[0].length;
         this.knownTiles = new boolean[width][height];
         fillItems(level);
-        EnemySet.init(this, level);
+        if (enemys) {
+            EnemySet.init(this, level);
+        }
     }
 
     private void fillItems(int level) {
         int itemsCount = Item.values().length;
         for (int i = 0; i < 10; i++) {
-            Pair<Integer, Integer> freeTail = getFreeTile();
+            Position freeTail = getFreeTile();
             Item item = Item.values()[random.nextInt(itemsCount)];
-            tiles[freeTail.getKey()][freeTail.getValue()].setItem(item);
+            tiles[freeTail.x()][freeTail.y()].setItem(item);
         }
     }
 
@@ -45,7 +48,7 @@ public class World {
         return tiles[x][y].removeItem();
     }
 
-    public Pair<Integer, Integer> getFreeTile() {
+    public Position getFreeTile() {
         int x;
         int y;
         do {
@@ -53,7 +56,7 @@ public class World {
             y = (int) (random.nextDouble() * height);
         }
         while (!canMoveTo(x, y) && !hasItem(x, y));
-        return new Pair<>(x, y);
+        return new Position(x, y);
     }
 
     public boolean isVisiable(int x, int y) {
