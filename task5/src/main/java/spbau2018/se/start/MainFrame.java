@@ -14,6 +14,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Стартовый класс, он же главный кадр, на котором будет происходить отрисовка
+ */
 public class MainFrame extends JFrame {
     private Screen screen;
 
@@ -42,6 +45,9 @@ public class MainFrame extends JFrame {
         revalidate();
     }
 
+    /**
+     * Перерисовка на кадре
+     */
     public void repaint() {
         screen.display(this);
         super.repaint();
@@ -67,6 +73,9 @@ public class MainFrame extends JFrame {
         app.setVisible(true);
     }
 
+    /**
+     * Включнение музыкального сопровождения
+     */
     public static void playMusic() {
         InputStream music;
         try {

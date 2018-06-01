@@ -7,10 +7,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Класс, реализующий область видимости персонажа
+ */
 public class FieldOfView {
+    /**
+     * Радиус видимости
+     */
     private int viewRadius;
+    /**
+     * Видимые тайлы
+     */
     private Set<Integer> knownTiles;
 
+    /**
+     * Вспомогательный хэш для хранения компонент
+     *
+     * @param x координата x
+     * @param y координата y
+     * @return хэш-значение
+     */
     private int hash(int x, int y) {
         return x * 10000 + y;
     }
@@ -20,6 +36,12 @@ public class FieldOfView {
         this.knownTiles = new HashSet<>();
     }
 
+    /**
+     * Проверка, видимый ли тайл
+     * @param x координата x тайла
+     * @param y координата y тайла
+     * @return true, если видимый, иначе false
+     */
     public boolean isVisible(int x, int y) {
         return knownTiles.contains(hash(x, y));
     }
@@ -32,6 +54,12 @@ public class FieldOfView {
         }
     }
 
+    /**
+     * Обновляет зону видимости вокруг цента
+     * @param a координата x центра
+     * @param b координата y центра
+     * @param world мир, в котором выделяем зону видимости
+     */
     public void updateVisiable(int a, int b, World world) {
         knownTiles = new HashSet<>();
         List<Point> line;

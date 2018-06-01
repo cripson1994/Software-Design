@@ -9,16 +9,41 @@ import java.awt.*;
 
 public class Inventory extends JPanel {
 
+    /**
+     * ячейки инвентаря
+     */
     private Cell[][] cells = new Cell[5][3];
 
+    /**
+     * Выбранная ячейка
+     */
     private Cell selectCell;
+    /**
+     * Размерность инвентаря
+     */
     private int dimX;
     private int dimY;
+    /**
+     * Колличесство предметов в инвентаре
+     */
     private int itemCount = 0;
+    /**
+     * Размер инвентаря
+     */
     private final int size = 15;
+    /**
+     * Изображение для отрисовки
+     */
     private ImageIcon background = new ImageIcon("sprites/inventory.png");
+    /**
+     * Аммунация в инвентаре
+     */
     private Ammunation ammunation = new Ammunation();
 
+    /**
+     * Добавляет предмет в инвентарь
+     * @param item добавляемый предмет
+     */
     public void add(Item item) {
         for (int j = 0; j < dimY; j++) {
             for (int i = 0; i < dimX; i++) {
@@ -31,6 +56,10 @@ public class Inventory extends JPanel {
         }
     }
 
+    /**
+     * Удаляет предмет из инвентаря
+     * @return ранее хранимый предмет в выбранной чейке
+     */
     public Item remove() {
         itemCount--;
         return selectCell.removeItem();
@@ -47,6 +76,12 @@ public class Inventory extends JPanel {
         selectCell = cells[0][0];
     }
 
+    /**
+     * Отрисовщик
+     * @param frame кадр, на котором будет происходить отрисовка
+     * @param x координата x выбранной ячейки
+     * @param y координата y выбранной ячейки
+     */
     public void paint(MainFrame frame, int x, int y) {
         selectCell.unselect();
         cells[x][y].select();

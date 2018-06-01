@@ -10,9 +10,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
 
+/**
+ * Класс, реализующий героя
+ */
 public class Hero extends spbau2018.se.characters.Character {
+    /**
+     * Число ходов, после которого у персонажа начинают восстанавливаться жизни, если он не учавствовал в бою
+     */
     private int respiteBound = 5;
+    /**
+     * счётчик числа ходов до восстановления здоровя
+     */
     private int respite = respiteBound;
+    /**
+     * инвентарь
+     */
     private Inventory inventory = new Inventory();
 
     {
@@ -20,6 +32,9 @@ public class Hero extends spbau2018.se.characters.Character {
         attack = 40;
     }
 
+    /**
+     * отрисовщик
+     */
     private class HeroDrawer extends Drawer {
         @Override
         public void draw(JFrame frame, int offsetX, int offsetY, FieldOfView view) {
@@ -45,6 +60,13 @@ public class Hero extends spbau2018.se.characters.Character {
         fieldOfView = new FieldOfView(8);
     }
 
+    /**
+     * Класс, обновляющий позицию персонажа
+     * @param world мир, в котором происходит движение
+     * @param offsetX смещение по х
+     * @param offsetY смещение по у
+     * @return true, если смещение удалось, в противном случае false
+     */
     public boolean updatePosition(World world, int offsetX, int offsetY) {
         if (world.canMoveTo(x + offsetX, y + offsetY)) {
             Enemy enemy = world.getEnemy(x + offsetX, y + offsetY);
@@ -67,6 +89,11 @@ public class Hero extends spbau2018.se.characters.Character {
     }
 
 
+    /**
+     * добавляет в аммунацию персонажа предмет
+     * @param item добовляемый предмет
+     * @return предмет, который был ранее одет (null, если соответствующая ячейка была пуста)
+     */
     public Item putOnItem(Item item) {
         log.info("put on " + item.type() + ": " + item.name());
         return inventory.getAmmunation().putOn(item);

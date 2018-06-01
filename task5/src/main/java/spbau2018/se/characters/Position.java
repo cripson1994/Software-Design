@@ -2,6 +2,9 @@ package spbau2018.se.characters;
 
 import java.util.Objects;
 
+/**
+ * Класс, для зранения позиций x и y
+ */
 public class Position {
     private int x;
     private int y;

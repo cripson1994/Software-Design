@@ -6,8 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+/**
+ * Класс, реализующий сцену начала игры
+ */
 public class StartScreen extends JPanel implements Screen {
 
+    /**
+     * Компонента, для отрисовки надписи
+     */
     private JLabel jlabel = new JLabel();
 
     public StartScreen() {

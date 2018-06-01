@@ -18,13 +18,30 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.event.KeyEvent.*;
 
-
+/**
+ * Оснеовная игровая сцена
+ */
 public class PlayScreen implements Screen {
 
+    /**
+     * Окно видимой на экране зоны
+     */
     private Window window;
+    /**
+     * мир, в котором происходят действия
+     */
     private World world;
+    /**
+     * управляемый персонаж
+     */
     private final Hero hero;
+    /**
+     * Основной отрисовщик мира
+     */
     private MainDrawer main = new MainDrawer();
+    /**
+     * Малый отрисовщик мира (карта скраю)
+     */
     private SmallDrawer small = new SmallDrawer();
 
 
@@ -95,6 +112,9 @@ public class PlayScreen implements Screen {
         }
     }
 
+    /**
+     * Реализация класса видимого на экране окна
+     */
     private class Window {
         int x;
         int y;
@@ -120,6 +140,11 @@ public class PlayScreen implements Screen {
             }
         }
 
+        /**
+         * Смещение видимой на экране зоны
+         * @param offsetX смещение по x
+         * @param offsetY смещение по y
+         */
         void scroll(int offsetX, int offsetY) {
             if ((hero.x() < world.getWidth() - width / 2 - 1 || (hero.x() == world.getWidth() - width / 2 - 1 && offsetX == 1))
                     && (hero.x() > width / 2 || (hero.x() == width / 2 && offsetX == -1))) {
@@ -133,6 +158,9 @@ public class PlayScreen implements Screen {
 
     }
 
+    /**
+     * Очищает сцену
+     */
     private void clearScreen() {
         Drawer.unregisterAll();
         PositionUpdater.unregisterAll();

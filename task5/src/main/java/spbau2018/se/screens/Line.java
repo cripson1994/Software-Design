@@ -4,8 +4,19 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, реализующий прямые линии
+ */
 public class Line {
 
+    /**
+     * Создаёт прямую
+     * @param x0 координата x начала
+     * @param y0 координата y начала
+     * @param x1 координата x конца
+     * @param y1 координата y конца
+     * @return готовую прямую (последовательность точек, записанную в list)
+     */
     public static List<Point> makeLine(int x0, int y0, int x1, int y1) {
         List<Point> points = new ArrayList<>();
 

@@ -9,6 +9,9 @@ import java.awt.event.*;
 
 import static java.awt.event.KeyEvent.*;
 
+/**
+ * Класс, для отображения сцены с открытым инвентарём
+ */
 public class IventoryScreen implements Screen {
 
     private Screen prev;

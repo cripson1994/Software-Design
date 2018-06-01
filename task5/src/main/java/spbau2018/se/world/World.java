@@ -9,8 +9,17 @@ import spbau2018.se.items.Item;
 
 import java.util.Random;
 
+/**
+ * Класс, реализующий мир
+ */
 public class World {
+    /**
+     * Тайлы мира
+     */
     private Tile[][] tiles;
+    /**
+     * Известные тайлы
+     */
     private final boolean knownTiles[][];
     private int width;
     private int height;
@@ -44,10 +53,20 @@ public class World {
         return tiles[x][y].getItem();
     }
 
+    /**
+     * Удаляет предмет из нужной ячейки карты
+     *
+     * @param x координата x ячейки из которой удаляем
+     * @param y координата y ячейки из которой удаляем
+     * @return предмет ранее хранимый в ячейке тайла
+     */
     public Item removeItem(int x, int y) {
         return tiles[x][y].removeItem();
     }
 
+    /**
+     * @return случайную свободную ячейку на карте
+     */
     public Position getFreeTile() {
         int x;
         int y;
@@ -59,10 +78,22 @@ public class World {
         return new Position(x, y);
     }
 
+    /**
+     * Проверяет, видим ли тайл
+     *
+     * @param x координата x тайла
+     * @param y координата y тайла
+     * @return true, если видима, иначе false
+     */
     public boolean isVisiable(int x, int y) {
         return knownTiles[x][y];
     }
 
+    /**
+     * Обновляет видимую зону мира
+     *
+     * @param hero герой, относительно которого обновляем видимую зону
+     */
     public void updateVisiable(Hero hero) {
         int radius = hero.getFieldOfView().getViewRadius();
         for (int x = hero.x() - radius; x < hero.x() + radius; x++) {
@@ -90,10 +121,23 @@ public class World {
         return tiles[x][y].getType();
     }
 
+    /**
+     * Проверяет, можно ли стоять на тайле с передаваемыми координатами
+     *
+     * @param x координата x тайла
+     * @param y координата y тайла
+     * @return true, если на тайле можно стоять, иначе false
+     */
     public boolean canMoveTo(int x, int y) {
         return TileType.isFreeTile(tiles[x][y].getType());
     }
 
+    /**
+     * Возращает врага на карте, стоящего на передаваемой позиции
+     * @param x координата x
+     * @param y координата y
+     * @return Enemy, если на позиции есть враг и null в противном случае
+     */
     public Enemy getEnemy(int x, int y) {
         return EnemySet.getEnemy(x, y);
     }

@@ -5,11 +5,25 @@ import spbau2018.se.items.Item;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс, реализующий ячейки аммунации
+ */
 public class AmunationCells extends JPanel {
+    /**
+     * ячейка для брони
+     */
     private Item armor;
+    /**
+     * ячейка для оружия
+     */
     private Item weapon;
     private ImageIcon cellIcon = new ImageIcon("sprites/amunationCell.png");
 
+    /**
+     * добавляет предмет в нужную ячейку аммунации
+     * @param item добавляемый предмет
+     * @return предмет, который был ранее одет (null, если соответствующая ячейка была пуста)
+     */
     public Item setItem(Item item) {
         Item old = null;
         switch (item.type()) {

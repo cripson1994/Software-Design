@@ -4,6 +4,10 @@ import spbau2018.se.characters.Hero;
 
 import java.util.Random;
 
+
+/**
+ * Enum всех возможных предметов в игре
+ */
 public enum Item {
     MACE("sprites/weapons/mace.gif", 5, 0, ItemType.WEAPON),
     DAGGER("sprites/weapons/dagger.gif", 15, 0, ItemType.WEAPON),
@@ -40,6 +44,10 @@ public enum Item {
         this.type = type;
     }
 
+    /**
+     * Действие, которое персонаж делает с предметом
+     * @param hero персонаж
+     */
     public void action(Hero hero) {
         if (type == ItemType.WEAPON || type == ItemType.ARMORE) {
             Item item = hero.putOnItem(this);

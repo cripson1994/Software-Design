@@ -6,8 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+/**
+ * Класс, реализующий сцену проигрыша
+ */
 public class LoseScreen extends JPanel implements spbau2018.se.screens.Screen {
-    JLabel jlabel = new JLabel();
+    /**
+     * Компонента, для отрисовки надписи
+     */
+    private JLabel jlabel = new JLabel();
 
     public LoseScreen() {
         jlabel.setText("-- press [enter] to start a new game--");

@@ -7,6 +7,9 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Метод, для отрисовки компонент игры, работает на подписках
+ */
 public abstract class Drawer extends JPanel {
     final private static List<Drawer> updaters = new LinkedList<>();
     protected int offsetX;
@@ -25,7 +28,14 @@ public abstract class Drawer extends JPanel {
         updaters.clear();
     }
 
-    public void drawLifeBar(Graphics g, int x, int y, int hp) {
+    /**
+     * Отрисовывает индекатор жизни
+     * @param g Graphic, на которой происходит отрисовка
+     * @param x координата x для отрисовки
+     * @param y координата y для отрисовки
+     * @param hp колличество жизней
+     */
+    protected void drawLifeBar(Graphics g, int x, int y, int hp) {
         if (hp < 100) {
             int ind = (int) Math.round((double) hp / 10);
             ImageIcon im = new ImageIcon("sprites/life/VIDA_" + ind + ".png");

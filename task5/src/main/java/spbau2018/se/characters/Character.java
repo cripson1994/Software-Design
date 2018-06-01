@@ -10,13 +10,20 @@ public abstract class Character {
     protected int y;
     protected int hp;
     protected int attack;
+    /**
+     * Область видимости
+     */
     protected FieldOfView fieldOfView;
+    /**
+     * Отрисовщик
+     */
     protected Drawer drawer;
 
-    public Drawer drawerCast() {
-        return drawer;
-    };
-
+    /**
+     * Метод, принимающий атаку сос стороны другого персонажа.
+     *
+     * @param character атакующий персонаж
+     */
     public abstract void bump(Character character);
 
     public int getAttack() {

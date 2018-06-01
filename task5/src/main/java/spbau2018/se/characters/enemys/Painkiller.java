@@ -4,13 +4,15 @@ import spbau2018.se.characters.Drawer;
 import spbau2018.se.characters.Hero;
 import spbau2018.se.characters.Position;
 import spbau2018.se.characters.PositionUpdater;
-import javafx.util.Pair;
 import spbau2018.se.world.FieldOfView;
 import spbau2018.se.world.World;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс, реализующий врага - Painkiller
+ */
 public class Painkiller extends Enemy {
 
 
@@ -19,7 +21,10 @@ public class Painkiller extends Enemy {
         attack = 10;
     }
 
-    private class SkeletonDrawer extends Drawer {
+    /**
+     * Отрисовщик
+     */
+    private class PainkillerDrawer extends Drawer {
         @Override
         public void draw(JFrame frame, int offsetX, int offsetY, FieldOfView heroView) {
             this.offsetX = offsetX;
@@ -39,7 +44,10 @@ public class Painkiller extends Enemy {
         }
     }
 
-    private class SkeletonPositionUpdater extends PositionUpdater {
+    /**
+     * Класс, для обновления позиции
+     */
+    private class PainkillerPositionUpdater extends PositionUpdater {
 
         @Override
         public void update(World world, Hero hero) {
@@ -61,8 +69,8 @@ public class Painkiller extends Enemy {
     public Painkiller(int x, int y) {
         this.x = x;
         this.y = y;
-        drawer = new Painkiller.SkeletonDrawer();
-        updater = new Painkiller.SkeletonPositionUpdater();
+        drawer = new PainkillerDrawer();
+        updater = new PainkillerPositionUpdater();
         fieldOfView = new FieldOfView(8);
     }
 }

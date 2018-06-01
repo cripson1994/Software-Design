@@ -3,7 +3,16 @@ package spbau2018.se.world;
 import com.github.czyzby.noise4j.map.Grid;
 import com.github.czyzby.noise4j.map.generator.room.dungeon.DungeonGenerator;
 
+/**
+ * Класс, реализующий билдера мира
+ */
 public class WorldBuilder {
+    /**
+     * Генерирует рандомный мир, в зависимости от уровня
+     *
+     * @param level уровень
+     * @return случайный мир
+     */
     public World buildRandom(int level) {
         int size = 50;
         final Grid grid = new Grid(size);
@@ -18,6 +27,12 @@ public class WorldBuilder {
         return new World(tiles, level, true);
     }
 
+    /**
+     * Генерирует мир по передаваемой сетке (0 - если свободная ячека и 1 - если занятая)
+     *
+     * @param grid сетка
+     * @return готовый мир
+     */
     public World build(int[][] grid) {
         int height = grid.length;
         int width = grid[0].length;
